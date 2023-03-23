@@ -22,12 +22,62 @@ const images = [
     }
 ];
 
-const newArrayOfImages = [];
+
+const imgContainer = document.querySelector(".card")
 
 images.forEach((curImg) => {
-    const nextImg = curImg + 1;
-    newArrayOfImages.push(nextImg)
-    console.log(curImg.image, curImg.text);
+    // console.log(curImg);
+    
+    const objCard = `
+        <div class = "picture">
+            <img src="${curImg.image}" alt="">
+            ${curImg.text}
+        </div>`;
+
+    imgContainer.innerHTML += objCard;
   
 })
 
+
+const picturesArray = document.getElementsByClassName("picture")
+console.log(picturesArray);
+
+let activeItemIndex = 0;
+picturesArray[activeItemIndex].classList.add("active");
+
+const prevBtn = document.querySelector(".prev-btn");
+const nextBtn = document.querySelector(".next-btn");
+
+nextBtn.addEventListener("click", automaticForw)
+
+prevBtn.addEventListener("click", backwards)
+
+
+
+
+//FUNCTION
+
+function automaticForw() {
+    picturesArray[activeItemIndex].classList.remove("active");
+    if (activeItemIndex < (picturesArray.length -1)){
+     activeItemIndex++;
+     } else {   
+      activeItemIndex = 0;      
+     }
+     picturesArray[activeItemIndex].classList.add("active") 
+     
+   
+}
+
+setInterval(automaticForw, 3000)
+
+function backwards() {
+    picturesArray[activeItemIndex].classList.remove("active");
+    if (activeItemIndex === 0) {
+        activeItemIndex = picturesArray.length - 1;  
+    } else {
+        activeItemIndex--;
+    }
+    
+    picturesArray[activeItemIndex].classList.add("active");
+}
